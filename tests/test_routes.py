@@ -137,6 +137,10 @@ class TestAccountService(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         data = resp.get_json()
         self.assertEqual(data["name"], account.name)
+        resp = self.client.get(
+            f"{BASE_URL}/{account.id + 1}", content_type="application.json"
+        )
+        self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_update_an_account(self):
         """Should update a single account"""
